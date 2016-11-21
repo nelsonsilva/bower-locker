@@ -21,11 +21,6 @@ function validate(isVerbose) {
     // Load bower.json and make sure it is a locked bower.json file
     var bowerConfigStr = fs.readFileSync('bower.json', {encoding: 'utf8'});
     var bowerConfig = JSON.parse(bowerConfigStr);
-    if (!bowerConfig.bowerLocker) {
-        console.warn('The bower.json is not a bower-locker generated file.\n' +
-        "Please run 'bower-locker lock' before validating");
-        process.exit(1);
-    }
 
     var errorsFound = 0;
 
@@ -34,7 +29,7 @@ function validate(isVerbose) {
 
     // Map bower.json resolutions block to form for easier checking
     var allBowerResolutions = Object.keys(bowerConfig.resolutions).map(function(key) {
-        return {name: key, commit: bowerConfig.resolutions[key]};
+        return {name: key, version: bowerConfig.resolutions[key]};
     });
 
     var deps = {};
@@ -46,11 +41,11 @@ function validate(isVerbose) {
             console.warn('Missing dependency that exists under bower_components but not in bower.json: %s', name);
         } else {
             deps[name] = dep;
-            if (bowerConfig.resolutions[name] !== dep.commit) {
+            if (bowerConfig.resolutions[name] !== dep.release) {
                 errorsFound++;
-                console.error('Commit mismatch found: %s', name);
-                console.error('\tbower_components commit: %s', dep.commit);
-                console.error('\tbower.json commit: %s', bowerConfig.resolutions[name]);
+                console.error('Version mismatch found: %s', name);
+                console.error('\tbower_components release: %s', dep.release);
+                console.error('\tbower.json release: %s', bowerConfig.resolutions[name]);
             }
         }
     });
