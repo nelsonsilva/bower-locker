@@ -21,6 +21,11 @@ function validate(isVerbose) {
     // Load bower.json and make sure it is a locked bower.json file
     var bowerConfigStr = fs.readFileSync('bower.json', {encoding: 'utf8'});
     var bowerConfig = JSON.parse(bowerConfigStr);
+    if (!bowerConfig.bowerLocker) {
+      console.warn('The bower.json is not a bower-locker generated file.\n' +
+      "Please run 'bower-locker lock' before validating");
+      process.exit(1);
+    }
 
     var errorsFound = 0;
 

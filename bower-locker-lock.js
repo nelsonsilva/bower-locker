@@ -38,6 +38,7 @@ function lock(isVerbose) {
     var dependencies = bowerInfo.getAllDependencies();
 
     // Create new bower config from existing
+    bowerConfig.bowerLocker = {lastUpdated: (new Date()).toISOString()};
     bowerConfig.resolutions = {};
     bowerConfig.dependencies = {};
     // Remove devDependency section to prevent version collision
