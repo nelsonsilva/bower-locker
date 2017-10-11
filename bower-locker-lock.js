@@ -47,7 +47,7 @@ function lock(isVerbose) {
     dependencies.forEach(function(dep) {
         // NOTE: Use dirName as the dependency name as it is more accurate than .bower.json properties
         var name = dep.dirName;
-        var version = dep.release;
+        var version = dep.type === 'branch' ? dep.branch : dep.release;
         bowerConfig.dependencies[name] = dep.src + '#' + version; // _source
         bowerConfig.resolutions[name] = version;
         if (isVerbose) {
