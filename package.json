@@ -1,17 +1,19 @@
 {
-  "name": "bower-locker",
-  "version": "1.0.5",
+  "name": "@udes/bower-locker",
+  "version": "1.0.6",
   "description": "A command-line tool for locking, unlocking, and validating bower files",
-  "keywords": ["bower", "lock", "unlock", "validate"],
-  "homepage": "https://github.com/infusionsoft/bower-locker",
+  "keywords": [
+    "bower",
+    "lock",
+    "unlock",
+    "validate"
+  ],
+  "homepage": "https://github.com/UdeS-STI/bower-locker",
   "repository": {
     "type": "git",
-    "url": "https://github.com/infusionsoft/bower-locker.git"
+    "url": "https://github.com/UdeS-STI/bower-locker.git"
   },
   "main": "bower-locker.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "Shawn Lonas",
   "license": "Apache-2.0",
   "bin": {
