@@ -38,7 +38,7 @@ function lock(isVerbose) {
     var dependencies = bowerInfo.getAllDependencies();
 
     // Create new bower config from existing
-    bowerConfig.resolutions = {};
+    bowerConfig.bowerLocker = {lastUpdated: (new Date()).toISOString()};
     bowerConfig.dependencies = {};
     // Remove devDependency section to prevent version collision
     delete bowerConfig.devDependencies;
@@ -46,9 +46,13 @@ function lock(isVerbose) {
     dependencies.forEach(function(dep) {
         // NOTE: Use dirName as the dependency name as it is more accurate than .bower.json properties
         var name = dep.dirName;
-        var version = dep.release;
-        bowerConfig.dependencies[name] = dep.src + '#' + version; // _source
-        bowerConfig.resolutions[name] = version;
+        var version = dep.type === 'branch' ? dep.branch : dep.release;
+        bowerConfig.dependencies[name] = dep.src + (version ? '#' + version: ""); // _source
+        if(!bowerConfig.resolutions[name]) {
+            bowerConfig.resolutions[name] = version ? version : "*";
+        } else if (bowerConfig.resolutions[name] !== "*") {
+            bowerConfig.resolutions[name] = version
+        }
         if (isVerbose) {
             console.log('  %s (%s): %s', name, dep.release, dep.commit);
         }
