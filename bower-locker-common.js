@@ -27,7 +27,7 @@ function mapDependencyData(bowerInfo) {
         name: bowerInfo.name,
         originalSrc: bowerInfo._originalSource,
         release: bowerInfo._release,
-        src: bowerInfo._source,
+        src: bowerInfo._target === "*" ? bowerInfo._originalSource : bowerInfo._source,
         tag: tag,
         type: type
     };
